@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, useMotionValueEvent, useScroll } from 'motion/react';
+import { useLenis } from 'lenis/react';
 import { useRef, useState } from 'react';
 
 export default function Header() {
@@ -12,8 +13,14 @@ export default function Header() {
     setPastHero(v > window.innerHeight * 0.7);
   });
 
+  const lenis = useLenis();
+
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (lenis) {
+      lenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (

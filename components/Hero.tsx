@@ -1,9 +1,11 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { GlowButton } from './ui/GlowButton';
+import { useLenis } from 'lenis/react';
+import { Button } from './ui/button';
 
 export default function Hero() {
+  const lenis = useLenis();
   return (
     <div className="relative flex h-screen min-w-[100vw] max-w-[100vw] w-[100vw] shrink-0 flex-col items-center justify-center overflow-hidden gap-8 px-6 md:px-6 pt-20 md:pt-0 bg-background z-10">
 
@@ -62,19 +64,19 @@ export default function Hero() {
         </h1>
 
         <div className="flex flex-col sm:flex-row items-center gap-8 pt-8 md:pt-4 w-auto">
-          <GlowButton
-            onClick={() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+          <motion.span
+            onClick={() => lenis?.scrollTo('#contact')}
+            className="cursor-pointer text-[0.7rem] uppercase tracking-[0.2em] font-mono font-bold hover:text-accent transition-colors duration-300"
           >
             Start a project
-            <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-          </GlowButton>
+          </motion.span>
 
-          <GlowButton
-            variant="secondary"
-            onClick={() => { const el = document.getElementById('work'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+          <motion.span
+            onClick={() => lenis?.scrollTo('#work')}
+            className="cursor-pointer text-[0.7rem] uppercase tracking-[0.2em] font-mono font-bold text-foreground/50 hover:text-foreground transition-colors duration-300"
           >
             See our work
-          </GlowButton>
+          </motion.span>
         </div>
       </motion.div>
 
@@ -101,16 +103,12 @@ export default function Hero() {
         transition={{ delay: 2.2, duration: 1 }}
         className="absolute bottom-8 right-6 md:bottom-10 md:right-12"
       >
-        <GlowButton
-          variant="secondary"
-          onClick={() => {
-            const el = document.getElementById('contact');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }}
-          className="px-8 py-4 md:px-10 md:py-5 lowercase tracking-[0.2em] font-medium"
+        <motion.span
+          onClick={() => lenis?.scrollTo('#contact')}
+          className="cursor-pointer text-[0.65rem] lowercase tracking-[0.2em] font-mono font-medium hover:text-accent transition-colors duration-300"
         >
           Contact Us
-        </GlowButton>
+        </motion.span>
       </motion.div>
     </div>
   );

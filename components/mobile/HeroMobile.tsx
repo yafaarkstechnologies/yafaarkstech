@@ -1,9 +1,11 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { GlowButton } from '../ui/GlowButton';
+import { useLenis } from 'lenis/react';
+import { Button } from '../ui/button';
 
 export default function HeroMobile() {
+  const lenis = useLenis();
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden gap-10 px-6 pt-32 pb-32 bg-background z-10 mb-20">
 
@@ -63,21 +65,23 @@ export default function HeroMobile() {
         </h1>
 
         <div className="flex flex-col items-center gap-4 w-full pt-2 max-w-[280px]">
-          <GlowButton
-            onClick={() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+          <Button
+            size="xl"
+            onClick={() => lenis?.scrollTo('#contact')}
             className="w-full"
           >
             Start a project
             <span className="active:translate-x-1 transition-transform duration-300">→</span>
-          </GlowButton>
+          </Button>
 
-          <GlowButton
+          <Button
             variant="secondary"
-            onClick={() => { const el = document.getElementById('work'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+            size="xl"
+            onClick={() => lenis?.scrollTo('#work')}
             className="w-full"
           >
             See our work
-          </GlowButton>
+          </Button>
         </div>
       </motion.div>
 

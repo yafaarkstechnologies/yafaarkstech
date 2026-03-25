@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, useInView } from 'motion/react';
+import { useLenis } from 'lenis/react';
 import { useRef } from 'react';
 import { Code2, Layout, Search, Database, ArrowRight } from 'lucide-react';
 
@@ -52,18 +53,30 @@ const services = [
 function GlowServiceCard({ item, index }: { item: typeof services[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
+  const lenis = useLenis();
+
+  const scrollToContact = () => {
+    if (lenis) {
+      lenis.scrollTo('#contact');
+    } else {
+      const el = document.getElementById('contact');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: index % 2 === 0 ? -80 : 80 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      whileHover={{ y: -8 }}
       transition={{ 
-        duration: 1.2, 
+        duration: 0.8, 
         ease: [0.16, 1, 0.3, 1],
         delay: index * 0.1 
       }}
-      className="relative flex flex-col items-center justify-center text-center p-10 rounded-[2rem] bg-[#0c0c0c] border border-white/5 overflow-hidden group min-h-[380px] transition-all duration-500 hover:border-white/10"
+      onClick={scrollToContact}
+      className="relative flex flex-col items-center justify-center text-center p-10 rounded-[2rem] bg-[#0c0c0c] border border-white/5 overflow-hidden group min-h-[380px] transition-all duration-500 hover:border-white/10 cursor-pointer shadow-2xl shadow-black/20"
     >
       {/* Dynamic Aurora Glow */}
       <div className={`absolute -bottom-16 left-1/2 -translate-x-1/2 w-[140%] h-32 ${item.glowColor} opacity-0 group-hover:opacity-30 blur-[80px] rounded-[100%] transition-opacity duration-1000`} />

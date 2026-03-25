@@ -46,7 +46,7 @@ export default function Home() {
             <Process />
 
             {/* Second Horizontal Block (6 screens: 1 Intro + 5 Projects) */}
-            <div className="relative z-20 bg-background shadow-[0_-50px_100px_rgba(0,0,0,0.5)]">
+            <div id="work" className="relative z-20 bg-background shadow-[0_-50px_100px_rgba(0,0,0,0.5)]">
               <HorizontalScroll pages={6}>
                 <HorizontalWork />
               </HorizontalScroll>

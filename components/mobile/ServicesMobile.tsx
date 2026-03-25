@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'motion/react';
+import { useLenis } from 'lenis/react';
 import { useRef } from 'react';
 import { Code2, Layout, Search, Database, ArrowRight } from 'lucide-react';
 
@@ -51,12 +52,24 @@ function GlowServiceCard({ item, index }: { item: typeof services[0]; index: num
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const lenis = useLenis();
+
+  const scrollToContact = () => {
+    if (lenis) {
+      lenis.scrollTo('#contact');
+    } else {
+      const el = document.getElementById('contact');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <motion.div
       ref={itemRef}
       style={{ opacity }}
-      className="relative flex flex-col gap-6 pt-24 pb-20 px-10 rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 overflow-hidden w-full items-center justify-center text-center min-h-[480px]"
+      whileTap={{ scale: 0.98 }}
+      onClick={scrollToContact}
+      className="relative flex flex-col gap-6 pt-24 pb-20 px-10 rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 overflow-hidden w-full items-center justify-center text-center min-h-[480px] cursor-pointer select-none active:bg-white/[0.02] transition-colors duration-300"
     >
       {/* Dynamic Aurora Glow */}
       <div className={`absolute -bottom-14 left-1/2 -translate-x-1/2 w-[140%] h-28 ${item.glowColor} opacity-20 blur-[60px] rounded-[100%]`} />
@@ -105,8 +118,8 @@ export default function ServicesMobile() {
           {services.map((item, i) => (
             <motion.div
               key={item.num}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ 
                 duration: 0.8, 
